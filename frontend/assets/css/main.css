@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #0a6ebd;
+  --color-secondary: #5a96e3;
+  --color-tertiary: #a1c2f1;
+  --color-quaternary: #edf7ff;
+  --color-dark-primary: #005da7;
+  --color-darker-primary: #003c6c;
+  --color-grey: #cccccc;
+  --color-red: #e0115f;
+  --color-dark-red: #8b0000;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2.25rem;
+}
