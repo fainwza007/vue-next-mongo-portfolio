@@ -45,10 +45,10 @@ const diff = computed(() => {
                     </span>
                 </div>
                 <div>
-                    <p class="whitespace-pre-wrap">{{ experience.detail }}</p>
+                    <!-- <p class="whitespace-pre-wrap">{{ experience.skills }}</p> -->
+                    <BaseBadgeList :badges="experience.skills" />
                 </div>
             </div>
-            <BaseBadgeItem :badges="experience.skills" />>
         </div>
         <div class="hidden md:block md:flex-1">
             <p class="whitespace-pre-wrap">{{ experience.detail }}</p>

@@ -17,7 +17,7 @@ const experience = {
     "skills": [
         "NodeJS", "TypeScript", "JavaScript"
     ],
-    "detail": "- Develop IOT SOLUTION"
+    "detail": "- Develop IOT SOLUTION ex. Locker With Employee RFID\n- หิวข้าวมาก"
 }
 
 </script>
