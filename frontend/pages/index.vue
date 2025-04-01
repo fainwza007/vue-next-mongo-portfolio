@@ -31,6 +31,21 @@ const experiences = [{
     "detail": "- Develop HIS FOR VAJIRA HOSPITAL"
 }]
 
+const portfolios = [{
+    "id": "65f3b27c8d4f2e3a1c0d9a7b",
+    "cover": "https://th.airportels.asia/wp-content/uploads/sites/2/2019/12/E-commerce-online-shopping.jpg",
+    "images": [
+        "https://www.paymentscardsandmobile.com/wp-content/uploads/2017/10/Global-B2C-e-commerce-market-1.jpg",
+        "https://gentech.id/wp-content/uploads/2024/07/COVID-19-1-2-1024x724.jpg",
+        "https://lh4.googleusercontent.com/7qyRstA9KwL-omYw_-xYwgm93gVItoXneuHStpARA3pT49uTEAs3kY4aVroqW3Gd2f8QMPhAihRgB7toCO_RpPc08DJVCSktMdL55Jr7lR4qAJ09881AIzCZZCyY8u9tHkktUNwO"
+    ],
+    "skills": ["React", "Node.js", "MongoDB", "Express"],
+    "title": "E-Commerce Platform Redesign",
+    "content": "Completely redesigned the user experience for an e-commerce platform serving over 50,000 monthly users. Implemented a microservices architecture that reduced page load times by 40% and increased conversion rates by 15%.",
+    "excerpt": "A complete overhaul of an e-commerce platform with improved performance and user experience.",
+    "publishedAt": "2025-01-15T14:30:00.000Z"
+},]
+
 function isExperienceVisible(index) {
     return true
 }
@@ -51,7 +66,8 @@ function isExperienceVisible(index) {
     </section>
 
     <section class="mb-10">
-        Portfolio List
+        <PortfolioList :portfolios="portfolios" :can-edit="true" :is-getting-portfolios="false"
+            has-more-portfolios="true" @more="console.log('clicked on more')"></PortfolioList>
     </section>
 
 </template>
