@@ -17,10 +17,13 @@ const onSubmit = handleSubmit(values => {
 
     <form @submit="onSubmit" class="space-y-3">
         <div>
-            <input v-bind="username" name="username" placeholder="Username" />
+            <!-- <input v-bind="username" name="username" placeholder="Username" /> -->
+            <BaseInput name="username" placeholder="Username" />
         </div>
         <div>
-            <input v-bind="password" name="password" type="password" />
+            <!-- <input v-bind="password" name="password" type="password" /> -->
+
+            <BaseInput name="password" type="password" placeholder="Password" />
         </div>
         <div>
             <BaseButton v-if="!isSubmitting" class="w-full" size="small" type="submit">

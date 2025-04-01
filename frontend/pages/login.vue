@@ -4,18 +4,25 @@ definePageMeta({
   layout: 'center',
 });
 
-function onSubmit() {
-  console.log('submitted!')
-}
+useHead({
+  title: 'Login'
+})
 
+const onSubmit = async (value) => {
+  console.log("🚀 ~ onSubmit ~ value:", value)
+}
 </script>
 
 <template>
 
-  <form @submit.prevent="onSubmit">
+  <!-- <form @submit.prevent="onSubmit">
     <input class="border" name="username" placeholder="Username">
     <input type="password" class="border" name="password" placeholder="Password">
     <BaseButton type="submit">Login</BaseButton>
-  </form>
+  </form> -->
+
+  <main class="m-auto w-[300px]">
+    <LoginForm @submit="onSubmit" />
+  </main>
 
 </template>
