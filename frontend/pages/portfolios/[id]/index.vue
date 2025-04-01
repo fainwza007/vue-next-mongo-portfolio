@@ -2,7 +2,7 @@
 
 const route = useRoute();
 
-console.log(`route.params : ${ route.params.id }`)
+// console.log(`route.params : ${ route.params.id }`)
 
 </script>
 
