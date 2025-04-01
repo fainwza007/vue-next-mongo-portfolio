@@ -29,4 +29,6 @@ const style = computed(() => {
         <input v-model="value" :class="style" v-bind="$attrs" />
     </div>
 
+    <BaseErrorMessage v-if="errorMessage">{{ errorMessage }}</BaseErrorMessage>
+
 </template>
