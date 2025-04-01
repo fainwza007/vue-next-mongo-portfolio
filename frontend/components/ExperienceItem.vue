@@ -8,8 +8,8 @@ const props = defineProps({
 
 const experienceType = computed(() => useExperienceType(props.experience.type))
 
-const start = computed(() => moment(props.experience.start).format('MMM YYY'))
-const end = computed(() => props.experience.end ? moment(props.experience.end).format('MMM YYY') : 'Present')
+const start = computed(() => moment(props.experience.start).format('MMM Do YY'))
+const end = computed(() => props.experience.end ? moment(props.experience.end).format('MMM Do YY') : 'Present')
 const diff = computed(() => {
     const { diffInYear, diffInMonth } = useDateRangeDiff(props.experience.start, props.experience.end)
 
@@ -36,7 +36,7 @@ const diff = computed(() => {
                 </h3>
                 <div>
                     <span> {{ experience.company }} </span>
-                    <span> . </span>
+                    <span> : </span>
                     <span> {{ experienceType }} </span>
                 </div>
                 <div>
