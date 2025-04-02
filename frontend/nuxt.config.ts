@@ -24,5 +24,9 @@ export default defineNuxtConfig({
         },
       },
     ],
+    "@pinia/nuxt",
   ],
+  // pinia: {
+  //   storesDirs: ["./stores/**", "./custom-folder/stores/**"],
+  // },
 });

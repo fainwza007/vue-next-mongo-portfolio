@@ -15,7 +15,7 @@ const onSubmit = handleSubmit(values => {
 
 <template>
 
-    <form @submit="onSubmit" class="space-y-3">
+    <form @submit.prevent="onSubmit" class="space-y-3">
         <div>
             <!-- <input v-bind="username" name="username" placeholder="Username" /> -->
             <BaseInput name="username" placeholder="Username" />
