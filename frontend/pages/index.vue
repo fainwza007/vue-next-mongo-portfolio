@@ -56,6 +56,7 @@ function isExperienceVisible(index) {
 
     <section class="mb-10">
         <SkillList :skills="['a', 'b']" can-edit="true" @edit="console.log('can edit')"></SkillList>
+        <SkillForm :skills="['a', 'b']" @submit="console.log('submitted')" @cancel="console.log('clicked on cancel')" />
     </section>
 
     <section class="mb-10">
