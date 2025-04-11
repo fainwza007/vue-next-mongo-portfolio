@@ -55,8 +55,17 @@ function isExperienceVisible(index) {
 <template>
 
     <section class="mb-10">
-        <SkillList :skills="['a', 'b']" can-edit="true" @edit="console.log('can edit')"></SkillList>
-        <SkillForm :skills="['a', 'b']" @submit="console.log('submitted')" @cancel="console.log('clicked on cancel')" />
+        <BaseEditable :edit-mode="false">
+            <template #edit>
+                <SkillForm :skills="['a', 'b']" @submit="console.log('submitted')"
+                    @cancel="console.log('clicked on cancel')" />
+            </template>
+            <template #view>
+                <SkillList :skills="['a', 'b']" can-edit="true" @edit="console.log('can edit')"></SkillList>
+            </template>
+        </BaseEditable>
+
+
     </section>
 
     <section class="mb-10">
