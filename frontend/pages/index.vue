@@ -1,4 +1,9 @@
 <script setup>
+import { useAuthStore } from '@/stores/auth'
+import { useProfileStore } from '@/stores/profile'
+
+const authStore = useAuthStore()
+const store = useProfileStore()
 
 useHead({
     title: 'Akarin Sangyor\'s portfolio',
@@ -50,18 +55,22 @@ function isExperienceVisible(index) {
     return true
 }
 
+await store.getProfile()
+
 </script>
 
 <template>
 
     <section class="mb-10">
-        <BaseEditable :edit-mode="false">
+        <BaseEditable :edit-mode="store.skillsEditMode">
             <template #edit>
-                <SkillForm :skills="['a', 'b']" @submit="console.log('submitted')"
-                    @cancel="console.log('clicked on cancel')" />
+                <SkillForm :skills="store.profile.overallSkills" @submit="store.saveSkills"
+                    @cancel="store.enterSkillsViewMode" />
             </template>
             <template #view>
-                <SkillList :skills="['a', 'b']" can-edit="true" @edit="console.log('can edit')"></SkillList>
+                <SkillList :skills="store.profile.overallSkills" :can-edit="authStore.canEdit"
+                    @edit="store.enterSkillsEditMode">
+                </SkillList>
             </template>
         </BaseEditable>
 

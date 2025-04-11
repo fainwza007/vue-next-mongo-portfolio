@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { loginAPI } from "~/repositories/auth";
 
 export const useAuthStore = defineStore("auth", () => {
   const user = ref({
@@ -29,7 +30,7 @@ export const useAuthStore = defineStore("auth", () => {
 
     user.value = {
       loggedIn: true,
-      token: Response.value.token,
+      token: response.value.token,
     };
 
     const token = useCookie("token");

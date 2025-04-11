@@ -29,4 +29,9 @@ export default defineNuxtConfig({
   // pinia: {
   //   storesDirs: ["./stores/**", "./custom-folder/stores/**"],
   // },
+  runtimeConfig: {
+    public: {
+      baseApiUrl: process.env.NUXT_API_BASE_URL,
+    },
+  },
 });
