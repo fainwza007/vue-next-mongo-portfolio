@@ -9,10 +9,17 @@ export const useProfileStore = defineStore("profile", () => {
   });
 
   const skillsEditMode = ref(false);
+  const experiencesEditMode = ref(false);
+  const visibleExperiencesNumber = ref(2);
+
+  const hasMoreExperiences = computed(() => {
+    return visibleExperiencesNumber.value < profile.value.experiences.length;
+  });
 
   async function getProfile() {
     try {
       const { data: response, error, status } = await getProfileAPI();
+      console.log("🚀 ~ getProfile ~ response:", response);
       if (status == "error") {
         throw new Error(error);
       }
@@ -50,6 +57,37 @@ export const useProfileStore = defineStore("profile", () => {
     }
   }
 
+  async function saveExperiences(draftedExperiences) {
+    const authStore = useAuthStore();
+
+    try {
+      const {
+        data: response,
+        error,
+        status,
+      } = await saveProfileAPI(draftedExperiences, authStore.token);
+      if (status == "error") {
+        throw new Error(error);
+      }
+
+      if (response.value.status) {
+        experiencesEditMode.value = false;
+
+        profile.value.experiences = draftedExperiences.experiences;
+      }
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  function isExperienceVisible(index) {
+    return index + 1 <= visibleExperiencesNumber.value;
+  }
+
+  function increaseVisibleExperiences(amount) {
+    visibleExperiencesNumber.value = visibleExperiencesNumber.value + amount;
+  }
+
   function enterSkillsEditMode() {
     skillsEditMode.value = true;
   }
@@ -58,12 +96,28 @@ export const useProfileStore = defineStore("profile", () => {
     skillsEditMode.value = false;
   }
 
+  function enterExperiencesEditMode() {
+    experiencesEditMode.value = true;
+  }
+
+  function enterExperiencesViewMode() {
+    experiencesEditMode.value = false;
+  }
+
   return {
     profile,
+    visibleExperiencesNumber,
+    hasMoreExperiences,
     skillsEditMode,
+    experiencesEditMode,
     getProfile,
     saveSkills,
     enterSkillsEditMode,
     enterSkillsViewMode,
+    saveExperiences,
+    isExperienceVisible,
+    increaseVisibleExperiences,
+    enterExperiencesEditMode,
+    enterExperiencesViewMode,
   };
 });

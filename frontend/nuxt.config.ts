@@ -5,7 +5,7 @@ import { defineNuxtConfig } from "nuxt/config";
 export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
   devtools: { enabled: true },
-  css: ["~/assets/css/main.css"],
+  css: ["~/assets/css/main.css", "vue-final-modal/style.css"],
   vite: {
     plugins: [tailwindcss()],
   },

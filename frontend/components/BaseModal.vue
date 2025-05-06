@@ -13,7 +13,7 @@ defineEmits(['confirm'])
 <template>
 
     <VueFinalModal class="flex justify-center items-center"
-        content-class="flex flex-col max-w-xl mx-4 p-y bg-white rounded-lg space-y-2">
+        content-class="flex flex-col max-w-xl mx-4 p-4 bg-white rounded-lg space-y-2">
         <h1 class="text-xl">
             {{ title }}
         </h1>

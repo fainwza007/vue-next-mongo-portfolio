@@ -8,17 +8,16 @@ const emits = defineEmits(['submit', 'cancel'])
 
 
 const { handleSubmit, isSubmitting } = useForm({
-    validationSchema: useExperienceValidationSchema(),
+    validationSchema: useExperiencesValidationSchema(),
     validateOnInput: true,
     keepValuesOnUnmount: true,
     initialValues: {
-        experiences: props.experiences
+      experiences: props.experiences,
     }
 })
 
 
-const { remove, prepend, fields } = useFieldArray('experiences')
-
+const { remove, prepend, fields } = useFieldArray('experiences');
 
 const onAdd = () => prepend({
     logo: '',
@@ -28,7 +27,7 @@ const onAdd = () => prepend({
     start: '',
     end: '',
     skills: [],
-    detail: ''
+    detail: '',
 })
 
 const onRemove = (idx) => {
@@ -36,28 +35,43 @@ const onRemove = (idx) => {
 }
 
 const onSubmit = handleSubmit(values => {
-    emits('submit', values)
+    emits('submit', values);
 })
 
 </script>
 
-<template>
 
+<template>
     <form @submit="onSubmit">
         <h2 class="text-xl font-bold mb-3 flex justify-between">
-            <span class=space-x-2>
+            <span class="space-x-2">
                 <span>Experiences</span>
-                <BaseButton type="button" size="small" variant="secondary" @click="onAdd">
+                <BaseButton
+                    type="button"
+                    size="small"
+                    variant="secondary"
+                    @click="onAdd"
+                >
                     Add
                 </BaseButton>
             </span>
-            <BaseFormPanel :is-saving="isSubmitting" @cancel="$emit('cancel')" />
+            <BaseFormPanel
+                :is-saving="isSubmitting"
+                @cancel="$emit('cancel')"
+            />
         </h2>
         <ol class="space-y-4">
-            <li v-for="(field, idx) in fields" :key="field.key">
-                <ExperienceFormField :key="idx" :field="field" :idx="idx" @remove="onRemove" />
+            <li
+                v-for="(field, idx) in fields"
+                :key="field.key"
+            >
+                <ExperienceFormField
+                    :key="idx"
+                    :field="field"
+                    :idx="idx"
+                    @remove="onRemove"
+                />
             </li>
         </ol>
     </form>
-
 </template>
