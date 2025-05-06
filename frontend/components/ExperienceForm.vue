@@ -55,9 +55,7 @@ const onSubmit = handleSubmit(values => {
         </h2>
         <ol class="space-y-4">
             <li v-for="(field, idx) in fields" :key="field.key">
-                <ExperienceFormField 
-                
-                />
+                <ExperienceFormField :key="idx" :field="field" :idx="idx" @remove="onRemove" />
             </li>
         </ol>
     </form>

@@ -36,6 +36,7 @@ const experiences = [{
     "detail": "- Develop HIS FOR VAJIRA HOSPITAL"
 }]
 
+
 const portfolios = [{
     "id": "65f3b27c8d4f2e3a1c0d9a7b",
     "cover": "https://th.airportels.asia/wp-content/uploads/sites/2/2019/12/E-commerce-online-shopping.jpg",
@@ -63,19 +64,35 @@ await store.getProfile()
 
     <section class="mb-10">
         <BaseEditable :edit-mode="store.skillsEditMode">
-            <template #edit>
-                <SkillForm :skills="store.profile.overallSkills" @submit="store.saveSkills"
-                    @cancel="store.enterSkillsViewMode" />
-            </template>
             <template #view>
                 <SkillList :skills="store.profile.overallSkills" :can-edit="authStore.canEdit"
                     @edit="store.enterSkillsEditMode">
                 </SkillList>
             </template>
+            <template #edit>
+                <SkillForm :skills="store.profile.overallSkills" @submit="store.saveSkills"
+                    @cancel="store.enterSkillsViewMode" />
+            </template>
         </BaseEditable>
 
 
     </section>
+
+    <!-- <section>
+
+        <BaseEditable :edit-mode="true">
+            <template #view?>
+                <ExperienceList :experiences="experiences" :can-edit="true" :has-more-experiences="true"
+                    :is-experience-visible="isExperienceVisible" @edit="console.log('clicked on edit')"
+                    @cancel="console.log('clicked on cancel')" />
+            </template>
+            <template #edit>
+                <ExperienceForm :experiences="experiences" @cancel="console.log('clicked on edit')"
+                    @submit="console.log('clicked on save')" />
+            </template>
+        </BaseEditable>
+
+    </section> -->
 
     <section class="mb-10">
         <!-- <ExperienceItem :experience="experience" /> -->
