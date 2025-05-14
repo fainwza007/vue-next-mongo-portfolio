@@ -56,8 +56,19 @@ function isExperienceVisible(index) {
     return true
 }
 
-await store.getProfile()
+const limit = 2
+const currentPortfoliosPage = ref(1)
 
+await store.getProfile()
+await store.getPortfolios(currentPortfoliosPage.value, limit)
+
+const onPortfoliosMore = async () => {
+    const nextPage = currentPortfoliosPage.value + 1;
+
+    await store.getPortfolios(nextPage, limit)
+
+    currentPortfoliosPage.value = nextPage
+}
 </script>
 
 <template>
@@ -90,6 +101,12 @@ await store.getProfile()
                     @submit="store.saveExperiences" />
             </template>
         </BaseEditable>
+    </section>
+    <section class="mb-10">
+        <PortfolioList :portfolios="store.portfolios" :can-edit="authStore.canEdit"
+            :is-getting-portfolios="store.isGettingPortfolios" :has-more-portfolios="store.hasMorePortfolios"
+            @more="onPortfoliosMore" />
+
     </section>
     <!-- <section class="mb-10"> -->
     <!-- <ExperienceItem :experience="experience" /> -->

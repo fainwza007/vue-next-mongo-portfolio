@@ -1,12 +1,17 @@
 import { defineStore } from "pinia";
 import { useAuthStore } from "@/stores/auth";
 import { getProfileAPI, saveProfileAPI } from "~/repositories/profile";
+import { getPortfoliosAPI } from "~/repositories/portfolio";
 
 export const useProfileStore = defineStore("profile", () => {
   const profile = ref({
     overallSkills: [],
     experiences: [],
   });
+
+  const portfolios = ref([]);
+  const isGettingPortfolios = ref(false);
+  const hasMorePortfolios = ref(true);
 
   const skillsEditMode = ref(false);
   const experiencesEditMode = ref(false);
@@ -19,7 +24,7 @@ export const useProfileStore = defineStore("profile", () => {
   async function getProfile() {
     try {
       const { data: response, error, status } = await getProfileAPI();
-      console.log("🚀 ~ getProfile ~ response:", response);
+
       if (status == "error") {
         throw new Error(error);
       }
@@ -27,6 +32,33 @@ export const useProfileStore = defineStore("profile", () => {
       profile.value = response.value;
     } catch (error) {
       throw new Error(error);
+    }
+  }
+
+  async function getPortfolios(page, limit) {
+    isGettingPortfolios.value = true;
+
+    try {
+      const {
+        data: response,
+        error,
+        status,
+      } = await getPortfoliosAPI(page, limit);
+      if (status == "error") {
+        throw new Error(error);
+      }
+
+      hasMorePortfolios.value = response.value.length >= limit;
+
+      if (page == 1) {
+        portfolios.value = response.value;
+      } else {
+        portfolios.value = { ...portfolios.value, ...response.value };
+      }
+    } catch (error) {
+      throw new Error(error);
+    } finally {
+      isGettingPortfolios.value = false;
     }
   }
 
@@ -110,7 +142,11 @@ export const useProfileStore = defineStore("profile", () => {
     hasMoreExperiences,
     skillsEditMode,
     experiencesEditMode,
+    portfolios,
+    isGettingPortfolios,
+    hasMorePortfolios,
     getProfile,
+    getPortfolios,
     saveSkills,
     enterSkillsEditMode,
     enterSkillsViewMode,
