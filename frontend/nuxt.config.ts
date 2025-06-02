@@ -25,7 +25,11 @@ export default defineNuxtConfig({
       },
     ],
     "@pinia/nuxt",
+    "vue3-carousel-nuxt",
   ],
+  carousel: {
+    prefix: "Base",
+  },
   // pinia: {
   //   storesDirs: ["./stores/**", "./custom-folder/stores/**"],
   // },
