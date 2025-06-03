@@ -1,11 +1,20 @@
-const express = require("express");
-const app = express();
-const port = 3000;
+import "dotenv/config";
+import useServers from "#app/di/servers";
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+const servers = useServers(
+  {},
+  {
+    http: {
+      port: process.env.APP_PORT,
+      jwt: {
+        secret: process.env.JWT_SECRET,
+        algorithms: process.env.JWT_ALGORITHMS.split(","),
+      },
+      cors: {
+        origin: process.env.CORS_ORIGIN,
+      },
+    },
+  }
+);
 
-app.listen(port, () => {
-  console.log(`app listening on port ${port}`);
-});
+servers.run();
