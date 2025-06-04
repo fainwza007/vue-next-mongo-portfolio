@@ -14,7 +14,7 @@ export default ({}, config) => {
   async function login(req, res) {
     res.status(200).json({
       token:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30",
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlBpY2hldCBJdG5nYW0iLCJpYXQiOjE1MTYyMzkwMjJ9.mVMnU3cgNFO27o_i1xxiYptVpa3ruv1H_mKJD3qzfj0",
       status: true,
     });
   }

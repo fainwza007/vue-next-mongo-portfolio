@@ -1,4 +1,11 @@
 export const errorHandler = (err, req, res, next) => {
+  if (err.name && err.name == "UnauthorizedError") {
+    res.status(401).json({
+      error: err.message,
+    });
+    return;
+  }
+
   console.log(err.stack);
 
   if (res.headerSent) {
