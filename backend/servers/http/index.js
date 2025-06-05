@@ -5,9 +5,9 @@ import useProfileHandlers from "#app/servers/http/handlers/profile";
 import usePortfolioHandlers from "#app/servers/http/handlers/portfolio";
 import { errorHandler } from "#app/servers/http/middlewares/errors";
 
-export default ({}, config) => {
+export default ({ authService }, config) => {
   const app = express();
-  const auth = useAuthHandlers({}, config.http);
+  const auth = useAuthHandlers({ authService }, config.http);
   const profile = useProfileHandlers({}, config.http);
   const portfolio = usePortfolioHandlers({}, config.http);
 

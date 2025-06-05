@@ -1,7 +1,7 @@
 import useHttpServer from "#app/servers/http/index";
 
-export default ({}, config) => {
-  const httpServer = useHttpServer({}, config);
+export default ({ authService }, config) => {
+  const httpServer = useHttpServer({ authService }, config);
 
   function run() {
     httpServer.run();

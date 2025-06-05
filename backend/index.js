@@ -1,8 +1,19 @@
 import "dotenv/config";
 import useServers from "#app/di/servers";
+import useServices from "#app/di/services";
+
+const { authService } = useServices(
+  {},
+  {
+    jwt: {
+      secret: process.env.JWT_SECRET,
+      algorithms: process.env.JWT_ALGORITHMS.split(","),
+    },
+  }
+);
 
 const servers = useServers(
-  {},
+  { authService },
   {
     http: {
       port: process.env.APP_PORT,
