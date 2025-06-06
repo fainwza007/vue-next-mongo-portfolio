@@ -5,11 +5,11 @@ import useProfileHandlers from "#app/servers/http/handlers/profile";
 import usePortfolioHandlers from "#app/servers/http/handlers/portfolio";
 import { errorHandler } from "#app/servers/http/middlewares/errors";
 
-export default ({ authService, profileService }, config) => {
+export default ({ authService, profileService, portfolioService }, config) => {
   const app = express();
   const auth = useAuthHandlers({ authService }, config.http);
   const profile = useProfileHandlers({ profileService }, config.http);
-  const portfolio = usePortfolioHandlers({}, config.http);
+  const portfolio = usePortfolioHandlers({ portfolioService }, config.http);
 
   app.use(express.json());
   app.use(cors(config.http.cors));

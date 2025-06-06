@@ -2,7 +2,7 @@ import "dotenv/config";
 import useServers from "#app/di/servers";
 import useServices from "#app/di/services";
 
-const { authService, profileService } = useServices(
+const { authService, profileService, portfolioService } = useServices(
   {},
   {
     jwt: {
@@ -13,7 +13,7 @@ const { authService, profileService } = useServices(
 );
 
 const servers = useServers(
-  { authService, profileService },
+  { authService, profileService, portfolioService },
   {
     http: {
       port: process.env.APP_PORT,
