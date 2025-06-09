@@ -1,9 +1,18 @@
 import "dotenv/config";
 import useServers from "#app/di/servers";
 import useServices from "#app/di/services";
+import useRepos from "#app/di/repositories";
+
+const { userRepo } = useRepos({
+  db: {
+    mongo: {
+      uri: process.env.MONGO_URI,
+    },
+  },
+});
 
 const { authService, profileService, portfolioService } = useServices(
-  {},
+  { userRepo },
   {
     jwt: {
       secret: process.env.JWT_SECRET,
