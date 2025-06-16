@@ -59,7 +59,7 @@ export const usePortfolioValidationSchema = () =>
       .label("Published At"),
   });
 
-export const useIdValidationSchema = () => {
+export const useIdValidationSchema = () =>
   yup
     .string()
     .test(
@@ -67,7 +67,6 @@ export const useIdValidationSchema = () => {
       "${path} is not a valid ObjectId",
       (value) => value === undefined || Types.ObjectId.isValid(value)
     );
-};
 
 export class ValidationError extends Error {
   constructor(message) {
