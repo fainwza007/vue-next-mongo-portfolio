@@ -90,11 +90,12 @@ export default (connection) => {
     let result;
 
     try {
-      result = PortfolioModel.deleteOne({ _id: id });
+      result = await PortfolioModel.deleteOne({ _id: id });
     } catch (error) {
       throw new Error(error);
     }
-    return result.deleteCount > 0;
+
+    return result.deletedCount > 0;
   }
 
   return {
