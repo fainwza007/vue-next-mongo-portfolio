@@ -20,11 +20,17 @@ export default ({ profileRepo }) => {
   async function getProfile() {
     let profile;
 
-    if (!profile) {
-      return {
-        overallSkills: [],
-        experiences: [],
-      };
+    try {
+      profile = await profileRepo.getProfile();
+
+      if (!profile) {
+        return {
+          overallSkills: [],
+          experiences: [],
+        };
+      }
+    } catch (error) {
+      throw new Error(error);
     }
 
     return {
