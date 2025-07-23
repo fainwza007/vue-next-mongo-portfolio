@@ -27,18 +27,19 @@ export default (connection) => {
   }
 
   async function getPortfolios(offset, limit) {
-    let portfolios;
-
     try {
-      portfolios = await PortfolioModel.where({})
-        .skip(offset)
-        .limit(limit)
-        .find();
+      const [portfolios, total] = await Promise.all([
+        PortfolioModel.where({}).skip(offset).limit(limit).find(),
+        PortfolioModel.countDocuments(),
+      ]);
+
+      return {
+        data: portfolios.map((p) => toPortfolio(p)),
+        total,
+      };
     } catch (error) {
       throw new Error(error);
     }
-
-    return portfolios.map((portfolio) => toPortfolio(portfolio));
   }
 
   async function getPortfolio(id) {
