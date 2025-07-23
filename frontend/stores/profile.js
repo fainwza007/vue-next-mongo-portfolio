@@ -1,18 +1,16 @@
 import { defineStore } from "pinia";
 import { useAuthStore } from "@/stores/auth";
-import { getProfileAPI, saveProfileAPI } from "~/repositories/profile";
-import { getPortfoliosAPI } from "~/repositories/portfolio";
+import { getProfileAPI, saveProfileAPI } from "@/repositories/profile";
+import { getPortfoliosAPI } from "@/repositories/portfolio";
 
 export const useProfileStore = defineStore("profile", () => {
   const profile = ref({
     overallSkills: [],
     experiences: [],
   });
-
   const portfolios = ref([]);
   const isGettingPortfolios = ref(false);
   const hasMorePortfolios = ref(true);
-
   const skillsEditMode = ref(false);
   const experiencesEditMode = ref(false);
   const visibleExperiencesNumber = ref(2);
@@ -24,7 +22,6 @@ export const useProfileStore = defineStore("profile", () => {
   async function getProfile() {
     try {
       const { data: response, error, status } = await getProfileAPI();
-
       if (status == "error") {
         throw new Error(error);
       }
@@ -44,17 +41,21 @@ export const useProfileStore = defineStore("profile", () => {
         error,
         status,
       } = await getPortfoliosAPI(page, limit);
+
+      // console.log(response);
       if (status == "error") {
         throw new Error(error);
       }
 
-      hasMorePortfolios.value = response.value.length >= limit;
+      // hasMorePortfolios.value = response.value.length >= limit;
 
       if (page == 1) {
-        portfolios.value = response.value;
+        portfolios.value = response.value.data;
       } else {
-        portfolios.value = { ...portfolios.value, ...response.value };
+        portfolios.value = [...portfolios.value, ...response.value.data];
       }
+
+      hasMorePortfolios.value = portfolios.value.length < response.value.total;
     } catch (error) {
       throw new Error(error);
     } finally {
@@ -74,7 +75,6 @@ export const useProfileStore = defineStore("profile", () => {
         { overallSkills: draftedSkills.skills },
         authStore.token
       );
-
       if (status == "error") {
         throw new Error(error);
       }
@@ -103,9 +103,9 @@ export const useProfileStore = defineStore("profile", () => {
       }
 
       if (response.value.status) {
-        experiencesEditMode.value = false;
-
         profile.value.experiences = draftedExperiences.experiences;
+
+        experiencesEditMode.value = false;
       }
     } catch (error) {
       throw new Error(error);
@@ -138,21 +138,20 @@ export const useProfileStore = defineStore("profile", () => {
 
   return {
     profile,
-    visibleExperiencesNumber,
-    hasMoreExperiences,
     skillsEditMode,
     experiencesEditMode,
+    hasMoreExperiences,
     portfolios,
     isGettingPortfolios,
     hasMorePortfolios,
     getProfile,
     getPortfolios,
     saveSkills,
-    enterSkillsEditMode,
-    enterSkillsViewMode,
     saveExperiences,
     isExperienceVisible,
     increaseVisibleExperiences,
+    enterSkillsEditMode,
+    enterSkillsViewMode,
     enterExperiencesEditMode,
     enterExperiencesViewMode,
   };

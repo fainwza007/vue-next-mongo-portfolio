@@ -5,7 +5,7 @@ import {
   savePortfolioAPI,
   createPortfolioAPI,
   deletePortfolioAPI,
-} from "~/repositories/portfolio";
+} from "@/repositories/portfolio";
 import moment from "moment";
 
 export const usePortfolioStore = defineStore("portfolio", () => {
@@ -46,10 +46,10 @@ export const usePortfolioStore = defineStore("portfolio", () => {
         error,
         status,
       } = await createPortfolioAPI(draftedPortfolio, authStore.token);
-
       if (status == "error") {
         throw new Error(error);
       }
+
       if (response.value.status) {
         portfolio.value = draftedPortfolio;
 
@@ -75,7 +75,6 @@ export const usePortfolioStore = defineStore("portfolio", () => {
         draftedPortfolio,
         authStore.token
       );
-
       if (status == "error") {
         throw new Error(error);
       }
