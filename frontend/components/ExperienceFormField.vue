@@ -8,7 +8,7 @@ defineEmits(['remove'])
 
 const showLogoModal = ref(false)
 
-const experienceTypeOptions = useExperienceType()
+const experienceTypeOptions = useExperienceTypes()
 
 const currentlyWorkHere = ref(props.field.value.end === null)
 

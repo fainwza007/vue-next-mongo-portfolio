@@ -14,7 +14,7 @@ export const useSkillsValidationSchema = () =>
 export const useExperienceValidationSchema = () =>
   yup.object({
     title: yup.string().required().label("Title"),
-    logo: yup.string().required().label("Logo"),
+    logo: yup.string().nullable().url().label("Logo"),
     company: yup.string().required().label("Company name"),
     type: yup.string().required().label("Type of employment"),
     start: yup
