@@ -17,7 +17,7 @@
         <img
           src="@/assets/images/avatar.jpg"
           alt="Avatar"
-          class="rounded-full w-20 h-20 border-2 border-primary md:w-52 md:h-52 md:mb-4"
+          class="rounded-full w-32 h-32 border-2 border-primary md:w-52 md:h-52 md:mb-4"
           v-motion
           :initial="initial"
           :enter="enter"
