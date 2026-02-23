@@ -44,7 +44,7 @@
             class="text-xs px-4 py-2 space-x-1 md:text-base md:px-7 md:py-3 md:space-x-2"
             target="blank"
           >
-            <span class="hidden [@media(min-width:321px)]:inline">Email</span>
+            <span class="hidden [@media(min-width:321px)]:inline">Linkedin</span>
             <IconLinkedin class="inline-block w-3 md:w-4" />
           </BaseLink>
         </div>
