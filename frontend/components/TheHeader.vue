@@ -25,7 +25,7 @@
       </div>
 
       <div>
-        <div class="font-bold text-xl text-center md:text-2xl">
+        <div class="font-bold text-lg text-center md:text-2xl">
           Akarin Sangyor
         </div>
         <p class="text-base text-center md:text-xl">Never Stop Learning!</p>
@@ -33,19 +33,19 @@
           <BaseLink
             size="small"
             to="mailto: Akarin.Sangyor@gmail.com"
-            class="md:text-base md:px-7 md:py-3 md:space-x-2"
+            class="text-xs px-4 py-2 space-x-1 md:text-base md:px-7 md:py-3 md:space-x-2"
           >
-            <span>Email</span>
-            <IconEnvelope class="inline-block w3 md:w-4"> </IconEnvelope>
+            <span class="hidden [@media(min-width:321px)]:inline">Email</span>
+            <IconEnvelope class="inline-block w-3 md:w-4" />
           </BaseLink>
           <BaseLink
             size="small"
             to="https://www.linkedin.com/in/akarin-sangyor-112282258/?originalSubdomain=th"
-            class="md:text-base md:px-7 md:py-3 md:space-x-2"
+            class="text-xs px-4 py-2 space-x-1 md:text-base md:px-7 md:py-3 md:space-x-2"
             target="blank"
           >
-            <span>Linkedin</span>
-            <IconLinkedin class="inline-block w3 md:w-4"> </IconLinkedin>
+            <span class="hidden [@media(min-width:321px)]:inline">Email</span>
+            <IconLinkedin class="inline-block w-3 md:w-4" />
           </BaseLink>
         </div>
       </div>
