@@ -14,6 +14,7 @@
     "@tailwindcss/vite": "^4.0.17",
     "@vee-validate/nuxt": "^4.15.0",
     "@vuepic/vue-datepicker": "^11.0.2",
+    "@vueuse/motion": "^3.0.3",
     "moment": "^2.30.1",
     "nuxt": "^3.16.1",
     "pinia": "^3.0.1",
