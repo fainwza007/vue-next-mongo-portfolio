@@ -26,6 +26,7 @@ export default defineNuxtConfig({
     ],
     "@pinia/nuxt",
     "vue3-carousel-nuxt",
+    "@vueuse/motion/nuxt",
   ],
   carousel: {
     prefix: "Base",
