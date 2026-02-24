@@ -10,12 +10,14 @@ useHead({
 });
 
 const store = useAuthStore();
-watch(
-  () => store.userError,
-  (val) => {
-    console.log("userError changed:", val);
-  },
-);
+
+// ถ้า login อยู่แล้วให้ redirect ไปหน้าหลัก
+onMounted(() => {
+  if (store.user) {
+    navigateTo("/");
+  }
+});
+
 const onSubmit = async (values) => {
   const success = await store.login(values.username, values.password);
   if (success) {
