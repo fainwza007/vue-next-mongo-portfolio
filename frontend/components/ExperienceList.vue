@@ -29,7 +29,7 @@ useIntersectionObserver(container, ([{ isIntersecting }]) => {
     :style="{
       opacity: isVisible ? 1 : 0,
       transform: isVisible ? 'translateX(0)' : 'translateX(-50px)',
-      transition: 'opacity 1.25s ease, transform 1.25s ease',
+      transition: 'opacity 1.8s ease, transform 1.4s ease',
     }"
   >
     <h2 class="text-xl font-bold mb-3 flex justify-between">
