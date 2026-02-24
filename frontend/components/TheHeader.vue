@@ -28,7 +28,12 @@
         <div class="font-bold text-lg text-center md:text-2xl">
           Akarin Sangyor
         </div>
-        <p class="text-base text-center md:text-xl">Never Stop Learning!</p>
+
+        <!-- Typewriter animation -->
+        <p class="text-base text-center md:text-xl">
+          {{ displayedText }}<span class="cursor">|</span>
+        </p>
+
         <div class="pt-2 flex flex-wrap gap-2 justify-center md:mt-2">
           <BaseLink
             size="small"
@@ -44,7 +49,9 @@
             class="text-xs px-4 py-2 space-x-1 md:text-base md:px-7 md:py-3 md:space-x-2"
             target="blank"
           >
-            <span class="hidden [@media(min-width:321px)]:inline">Linkedin</span>
+            <span class="hidden [@media(min-width:321px)]:inline"
+              >Linkedin</span
+            >
             <IconLinkedin class="inline-block w-3 md:w-4" />
           </BaseLink>
         </div>
@@ -67,4 +74,63 @@ const enter = ref({
     damping: 15,
   },
 });
+
+// --- Typewriter ---
+const phrases = [
+  "💻 Programmer",
+  "🛠️ Software Engineer",
+  "🚀 FullStack Developer",
+  "🌱 Never Stop Learning!",
+];
+
+const typeSpeed = 80; // ms ต่อตัวอักษร (พิมพ์)
+const deleteSpeed = 40; // ms ต่อตัวอักษร (ลบ)
+const pauseAfterType = 1500; // หยุดหลังพิมพ์เสร็จ (ms)
+const pauseAfterDelete = 300; // หยุดหลังลบหมด (ms)
+
+const displayedText = ref("");
+let phraseIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+
+function tick() {
+  const current = phrases[phraseIndex];
+  const chars = Array.from(current);
+
+  if (!isDeleting) {
+    displayedText.value = chars.slice(0, ++charIndex).join("");
+    if (charIndex === chars.length) {
+      isDeleting = true;
+      setTimeout(tick, pauseAfterType);
+      return;
+    }
+  } else {
+    displayedText.value = chars.slice(0, --charIndex).join("");
+    if (charIndex === 0) {
+      isDeleting = false;
+      phraseIndex = (phraseIndex + 1) % phrases.length;
+      setTimeout(tick, pauseAfterDelete);
+      return;
+    }
+  }
+
+  setTimeout(tick, isDeleting ? deleteSpeed : typeSpeed);
+}
+
+onMounted(() => {
+  setTimeout(tick, pauseAfterDelete);
+});
 </script>
+
+<style scoped>
+.cursor {
+  display: inline-block;
+  animation: blink 0.7s step-end infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+</style>
