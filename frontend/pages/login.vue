@@ -13,7 +13,7 @@ const store = useAuthStore();
 
 // ถ้า login อยู่แล้วให้ redirect ไปหน้าหลัก
 onMounted(() => {
-  if (store.user) {
+  if (store.user.loggedIn === true) {
     navigateTo("/");
   }
 });
