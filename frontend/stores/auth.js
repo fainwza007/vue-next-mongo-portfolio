@@ -13,8 +13,39 @@ export const useAuthStore = defineStore("auth", () => {
   const token = computed(() => user.value.token);
   const canEdit = computed(() => user.value.loggedIn);
 
+  // async function login(username, password) {
+  //   isLoggedIn.value = true;
+
+  //   const {
+  //     data: response,
+  //     error,
+  //     status,
+  //   } = await loginAPI(username, password);
+
+  //   if (status.value == "error") {
+  //     useCustomError(error.value, (error) => {
+  //       userError.value = error.data.error;
+  //     });
+  //   }
+
+  //   user.value = {
+  //     loggedIn: true,
+  //     token: response.value.token,
+  //   };
+
+  //   const token = useCookie("token");
+
+  //   token.value = response.value.token;
+
+  //   isLoggedIn.value = false;
+  //   userError.value = "";
+
+  //   return true;
+  // }
+
   async function login(username, password) {
     isLoggedIn.value = true;
+    userError.value = ""; // reset ก่อนทุกครั้ง
 
     const {
       data: response,
@@ -22,10 +53,12 @@ export const useAuthStore = defineStore("auth", () => {
       status,
     } = await loginAPI(username, password);
 
-    if (status.value == "error") {
+    if (status.value === "error") {
       useCustomError(error.value, (error) => {
         userError.value = error.data.error;
       });
+      isLoggedIn.value = false;
+      return false; // 🔑 return ออกเลย ไม่รันต่อ
     }
 
     user.value = {
@@ -34,11 +67,9 @@ export const useAuthStore = defineStore("auth", () => {
     };
 
     const token = useCookie("token");
-
     token.value = response.value.token;
 
     isLoggedIn.value = false;
-    userError.value = "";
 
     return true;
   }
