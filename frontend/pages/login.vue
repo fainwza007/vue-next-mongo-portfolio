@@ -1,27 +1,30 @@
 <script setup>
-
-import { useAuthStore } from '~/stores/auth';
+import { useAuthStore } from "~/stores/auth";
 
 definePageMeta({
-  layout: 'center',
+  layout: "center",
 });
 
 useHead({
-  title: 'Login'
-})
+  title: "Login",
+});
 
-const store = useAuthStore()
-
+const store = useAuthStore();
+watch(
+  () => store.userError,
+  (val) => {
+    console.log("userError changed:", val);
+  },
+);
 const onSubmit = async (values) => {
-  const success = await store.login(values.username, values.password)
+  const success = await store.login(values.username, values.password);
   if (success) {
-    await navigateTo('/')
+    await navigateTo("/");
   }
-}
+};
 </script>
 
 <template>
-
   <!-- <form @submit.prevent="onSubmit">
     <input class="border" name="username" placeholder="Username">
     <input type="password" class="border" name="password" placeholder="Password">
@@ -30,9 +33,8 @@ const onSubmit = async (values) => {
 
   <main class="flex items-center justify-center min-h-screen">
     <div class="w-full max-w-sm">
-      <LoginForm @submit="onSubmit" />
-      <BaseErrorMessage>{{ store.userError }}</BaseErrorMessage>
+      <LoginForm @submit="onSubmit" :error="store.userError" />
+      <!-- <BaseErrorMessage>{{ store.userError }}</BaseErrorMessage> -->
     </div>
   </main>
-
 </template>
