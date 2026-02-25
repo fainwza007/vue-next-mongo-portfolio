@@ -32,7 +32,7 @@ useIntersectionObserver(container, ([{ isIntersecting }]) => {
       transition: 'opacity 1.8s ease, transform 1.4s ease',
     }"
   >
-    <h2 class="text-xl font-bold mb-3 flex justify-between">
+    <h2 class="text-xl font-bold mb-6 flex justify-between">
       <span>Experiences</span>
       <BaseButton
         v-if="canEdit"
