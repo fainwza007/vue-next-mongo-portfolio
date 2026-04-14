@@ -42,25 +42,32 @@
 
         <!-- grouped Resume | CV -->
         <div class="flex justify-center mt-3 md:mt-4">
-          <div class="inline-flex items-stretch border border-primary rounded-lg overflow-hidden">
+          <div
+            class="inline-flex items-stretch border border-primary rounded-xl overflow-hidden min-w-[220px] md:min-w-[288px]">
             <a
             href="https://canva.link/hmxj7mj32jfy3zy"
             target="_blank"
-            class="flex flex-col justify-center items-center gap-1 w-28 py-3 md:w-40 md:py-4 bg-white hover:bg-teal-50
+            class="flex flex-1 justify-center items-center gap-2 py-2.5 px-4 md:py-3 md:px-6 bg-white hover:bg-teal-50
             transition-colors"
             >
-            <img class="w-10 h-10 md:w-14 md:h-14 object-contain" src="../assets/images/resume.png" />
-            <span class="text-xs md:text-sm font-medium text-teal-600">Resume</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-teal-600 flex-shrink-0" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16" />
+            </svg>
+            <span class="text-sm md:text-base font-medium text-teal-600">Resume</span>
             </a>
-            <div class="w-px bg-primary"></div>
+            <div class="w-px bg-primary opacity-30"></div>
             <a
             href="https://canva.link/13vy701za1cj541"
             target="_blank"
-            class="flex flex-col justify-center items-center gap-1 w-28 py-3 md:w-40 md:py-4 bg-white hover:bg-violet-50
+            class="flex flex-1 justify-center items-center gap-2 py-2.5 px-4 md:py-3 md:px-6 bg-white hover:bg-violet-50
             transition-colors"
             >
-            <img class="w-10 h-10 md:w-14 md:h-14 object-contain" src="../assets/images/cv (1).png" />
-            <span class="text-xs md:text-sm font-medium text-violet-600">CV</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-violet-600 flex-shrink-0" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16" />
+            </svg>
+            <span class="text-sm md:text-base font-medium text-violet-600">CV</span>
             </a>
           </div>
         </div>
