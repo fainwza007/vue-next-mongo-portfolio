@@ -30,7 +30,7 @@
         </div>
 
         <!-- Typewriter animation -->
-        <p class="text-base text-center md:text-xl">
+        <p class="pt-3 pb-1.5 text-base text-center md:text-xl">
           {{ displayedText }}<span class="cursor">|</span>
         </p>
 
