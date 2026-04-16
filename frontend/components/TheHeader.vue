@@ -13,8 +13,8 @@
       }">
       <div class="flex-none">
         <img src="@/assets/images/avatar.jpg" alt="Avatar"
-          class="rounded-full w-32 h-32 border-2 border-primary md:w-52 md:h-52 md:mb-4" v-motion :initial="initial"
-          :enter="enter" />
+          class="rounded-full w-32 h-32 border-2 border-primary mt-7 sm:mt-0 md:w-52 md:h-52 md:mb-4" v-motion
+          :initial="initial" :enter="enter" />
       </div>
 
       <div>
@@ -41,33 +41,24 @@
         </div>
 
         <!-- grouped Resume | CV -->
-        <div class="flex justify-center mt-3 md:mt-4">
-          <div
-            class="inline-flex items-stretch border border-primary rounded-xl overflow-hidden min-w-[220px] md:min-w-[288px]">
-            <a
-            href="https://canva.link/hmxj7mj32jfy3zy"
-            target="_blank"
-            class="flex flex-1 justify-center items-center gap-2 py-2.5 px-4 md:py-3 md:px-6 bg-white hover:bg-teal-50
-            transition-colors"
-            >
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-teal-600 flex-shrink-0" fill="none"
-              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16" />
-            </svg>
-            <span class="text-sm md:text-base font-medium text-teal-600">Resume</span>
+        <div class="flex justify-center mt-3 md:mt-4 px-2">
+          <div class="inline-flex items-stretch border border-primary rounded-xl overflow-hidden w-full max-w-xs">
+            <a href="https://canva.link/hmxj7mj32jfy3zy" target="_blank" class="flex flex-1 justify-center items-center gap-2 py-2.5 px-4 md:py-3 md:px-6 bg-white hover:bg-teal-50
+            transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-teal-600 flex-shrink-0" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16" />
+              </svg>
+              <span class="text-sm md:text-base font-medium text-teal-600">Resume</span>
             </a>
             <div class="w-px bg-primary opacity-30"></div>
-            <a
-            href="https://canva.link/13vy701za1cj541"
-            target="_blank"
-            class="flex flex-1 justify-center items-center gap-2 py-2.5 px-4 md:py-3 md:px-6 bg-white hover:bg-violet-50
-            transition-colors"
-            >
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-violet-600 flex-shrink-0" fill="none"
-              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16" />
-            </svg>
-            <span class="text-sm md:text-base font-medium text-violet-600">CV</span>
+            <a href="https://canva.link/13vy701za1cj541" target="_blank" class="flex flex-1 justify-center items-center gap-2 py-2.5 px-4 md:py-3 md:px-6 bg-white hover:bg-violet-50
+            transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-violet-600 flex-shrink-0" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16" />
+              </svg>
+              <span class="text-sm md:text-base font-medium text-violet-600">CV</span>
             </a>
           </div>
         </div>
