@@ -81,12 +81,36 @@ export const useAuthStore = defineStore("auth", () => {
     };
   }
 
+  async function logout() {
+    try {
+      // เผื่อไว้ (optional) ยิง API ถ้ามี backend invalidate token
+      // await logoutAPI();
+    }
+    catch (error) {
+      console.log(error)
+    }
+
+    // 1. เคลียร์ state
+    user.value = {
+      loggedIn: false,
+      token: ""
+    }
+
+    // 2. ลบ cookie
+    const token = useCookie("token");
+    token.value = null;
+
+    // 3. reset error
+    userError.value = "";
+  }
+
   return {
     user,
     token,
     canEdit,
     userError,
     login,
+    logout,
     setUser,
   };
 });

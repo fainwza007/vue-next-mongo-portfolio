@@ -53,5 +53,11 @@ export default ({ userRepo }, config) => {
     return true;
   }
 
-  return { login, register };
+  async function resetPassword(username, password) {
+    const auth = await validationSchema.validate({username, password})
+
+    const result =  await userRepo.resetPassword(auth.username, auth.password)
+  }
+
+  return { login, register, resetPassword };
 };

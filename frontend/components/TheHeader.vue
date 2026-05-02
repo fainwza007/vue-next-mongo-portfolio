@@ -11,6 +11,20 @@
           opacity: 1,
         },
       }">
+      <div v-if="authStore.canEdit" class="absolute top-3 left-3 md:left-auto md:right-6 md:top-5">
+        <button @click="handleLogout" class="group flex items-center gap-2 px-3 py-2 md:px-4 md:py-2.5
+           bg-gradient-to-r from-red-500 to-rose-500
+           hover:from-red-600 hover:to-rose-600
+           active:scale-95
+           text-white text-xs md:text-sm font-medium
+           rounded-xl shadow-md hover:shadow-lg
+           transition-all duration-200">
+          <IconLogout class="w-4 h-4 md:w-5 md:h-5 transition-transform group-hover:rotate-12" />
+
+          <!-- mobile ซ่อน text -->
+          <span class="hidden sm:inline">Logout</span>
+        </button>
+      </div>
       <div class="flex-none">
         <img src="@/assets/images/avatar.jpg" alt="Avatar"
           class="rounded-full w-32 h-32 border-2 border-primary mt-7 sm:mt-0 md:w-52 md:h-52 md:mb-4" v-motion
@@ -123,6 +137,17 @@ function tick() {
 
   setTimeout(tick, isDeleting ? deleteSpeed : typeSpeed);
 }
+
+import { useRoute } from 'vue-router';
+import { useAuthStore } from '@/stores/auth'
+
+const authStore = useAuthStore()
+
+async function handleLogout() {
+  await authStore.logout();
+  navigateTo("/login");
+}
+
 
 onMounted(() => {
   setTimeout(tick, pauseAfterDelete);
