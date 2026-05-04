@@ -26,7 +26,7 @@ export function createPortfolioAPI(portfolio, token) {
 
 export function savePortfolioAPI(id, portfolio, token) {
   return useFetchAPI(`/portfolios/${id}`, {
-    method: put,
+    method: "put",
     headers: {
       authorization: `Bearer ${token}`,
     },
