@@ -1,24 +1,17 @@
 <script setup>
-
 const props = defineProps({
-    size: String,
-    variant: String
-})
+  size: String,
+  variant: String,
+});
 
-const elementSizeClass = useActionableSizeClass(props.size)
-
-const elementVariantClass = useActionableVariantClass(props.variant)
-
-
+const elementSizeClass = computed(() => useActionableSizeClass(props.size));
+const elementVariantClass = computed(() =>
+  useActionableVariantClass(props.variant)
+);
 </script>
 
-
 <template>
-
-
-<button :class="[elementVariantClass, elementSizeClass]">
+  <button :class="[elementVariantClass, elementSizeClass]">
     <slot />
-</button>
-
-
+  </button>
 </template>

@@ -19,13 +19,12 @@ export const useSkillsStore = defineStore("skills", () => {
         error,
         status,
       } = await saveProfileAPI(draftedSkills, authStore.token);
-      if (status == "error") {
-        throw new Error(error);
+      if (status.value === "error" || error.value) {
+        throw error.value || new Error("Failed to save skills");
       }
 
-      if (response.value.status) {
+      if (response.value?.status) {
         editMode.value = false;
-
         skills.value = draftedSkills.skills;
       }
     } catch (error) {

@@ -1,4 +1,3 @@
-import portfolio from "#app/servers/http/handlers/portfolio";
 import {
   usePortfolioValidationSchema,
   useIdValidationSchema,
@@ -20,13 +19,17 @@ export default ({ portfolioRepo }) => {
   }
 
   async function getPortfolios(page, limit) {
-    let portfolios = [];
+    const parsedPage = Number(page) || 1;
+    const parsedLimit = Number(limit) || 6;
 
-    const sanitizedPage = Math.max(page, 1);
-    const sanitizedLimit = Math.min(limit, 10);
+    const sanitizedPage = Math.max(parsedPage, 1);
+    const sanitizedLimit = Math.min(Math.max(parsedLimit, 1), 10);
     const offset = (sanitizedPage - 1) * sanitizedLimit;
 
-    portfolios = await portfolioRepo.getPortfolios(offset, sanitizedLimit);
+    const portfolios = await portfolioRepo.getPortfolios(
+      offset,
+      sanitizedLimit
+    );
 
     return portfolios;
   }

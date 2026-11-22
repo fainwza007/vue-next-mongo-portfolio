@@ -1,20 +1,16 @@
 <script setup>
-
-  const props =  defineProps({
-        badges: Array
-    })
-
+defineProps({
+  badges: {
+    type: Array,
+    default: () => [],
+  },
+});
 </script>
 
 <template>
-
-    <ul class="[&>li]:inline-block">
-        <li 
-            class="mr-1 mt-1 md:mr-2 md:mt-2"
-            v-for="item in badges"
-        >
-            <BaseBadgeItem>{{ item }}</BaseBadgeItem>
-        </li>
-    </ul>
-
+  <ul class="flex flex-wrap gap-1.5 md:gap-2">
+    <li v-for="(item, index) in badges" :key="`${item}-${index}`">
+      <BaseBadgeItem>{{ item }}</BaseBadgeItem>
+    </li>
+  </ul>
 </template>

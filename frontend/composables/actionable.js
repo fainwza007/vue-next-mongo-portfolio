@@ -1,31 +1,30 @@
-// สร้าง composable function สำหรับ size
-
 export const useActionableSizeClass = (size) => {
   switch (size) {
     case "small":
-      return "text-xs px-4 py-2 space-x-2";
+      return "text-xs md:text-sm px-3.5 py-2 gap-1.5";
 
     case "large":
     default:
-      return "text-base px-7 py-3 space-x-2";
+      return "text-sm md:text-base px-6 py-2.5 md:px-7 md:py-3 gap-2";
   }
 };
 
-// สร้าง composable function สำหรับ variant
-
 export const useActionableVariantClass = (theme) => {
+  const base =
+    "inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-200 cursor-pointer select-none focus:outline-none focus:ring-4";
+
   switch (theme) {
     case "secondary":
-      return "text-center text-primary bg-transparent rounded-lg align-middle border-2 !py-1.5 border-primary [&>*]:align-middle hover:text-secondary hover:border-secondary active:text-dark-primary active:border-dark-primary";
+      return `${base} text-primary bg-white/90 border border-primary/25 shadow-2xs hover:bg-quaternary hover:border-primary/50 hover:text-dark-primary active:scale-[0.98] focus:ring-primary/15`;
 
     case "danger":
-      return "text-center text-white bg-red rounded-lg align-middle shadow-md [&>*]:align-middle hover:bg-red active:shadow-inner active:shadow-dark-red active:bg-red";
+      return `${base} text-white bg-gradient-to-r from-rose-500 to-red-600 shadow-sm shadow-rose-500/20 hover:from-rose-600 hover:to-red-700 hover:shadow-md hover:shadow-rose-500/30 active:scale-[0.98] focus:ring-rose-500/20`;
 
     case "disabled":
-      return "text-center text-grey bg-transparent rounded-lg align-middle border-2 !py-1.5 border-grey [&>*]:align-middle";
+      return `${base} text-slate-400 bg-slate-100 border border-slate-200 !cursor-not-allowed opacity-75`;
 
     case "primary":
     default:
-      return "text-center text-white bg-primary rounded-lg align-middle shadow-md shadow-tertiary [&>*]:align-middle hover:bg-secondary active:shadow-inner active:shadow-darker-primary active:bg-dark-primary";
+      return `${base} text-white bg-gradient-to-r from-primary to-secondary shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 hover:brightness-105 active:scale-[0.98] focus:ring-primary/20`;
   }
 };

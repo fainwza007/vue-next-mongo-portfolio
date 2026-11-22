@@ -23,10 +23,14 @@ export default (connection) => {
   );
 
   function toProfile(profile) {
+    if (!profile) return null;
     return {
-      id: profile.id,
-      overallSkills: profile.overallSkills,
-      experiences: profile.experiences,
+      id: (profile._id ?? profile.id)?.toString(),
+      overallSkills: profile.overallSkills ?? [],
+      experiences: (profile.experiences ?? []).map((exp) => ({
+        ...exp,
+        id: (exp._id ?? exp.id)?.toString(),
+      })),
     };
   }
 
@@ -34,7 +38,7 @@ export default (connection) => {
     let profile;
 
     try {
-      profile = await ProfileModel.where({}).findOne();
+      profile = await ProfileModel.findOne({}).lean();
 
       if (!profile) {
         return profile;

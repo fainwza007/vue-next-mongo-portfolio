@@ -1,27 +1,28 @@
 import { Schema } from "mongoose";
 
 export default (connection) => {
-  const PortfolioModel = connection.model(
-    "Portfolio",
-    new Schema({
-      cover: String,
-      images: [String],
-      title: String,
-      content: String,
-      skills: [String],
-      publishedAt: Date,
-    })
-  );
+  const PortfolioSchema = new Schema({
+    cover: String,
+    images: [String],
+    title: String,
+    content: String,
+    skills: [String],
+    publishedAt: { type: Date, index: -1 },
+  });
+
+  const PortfolioModel = connection.model("Portfolio", PortfolioSchema);
 
   function toPortfolio(portfolio) {
+    if (!portfolio) return null;
+    const content = portfolio.content ?? "";
     return {
-      id: portfolio.id,
+      id: (portfolio._id ?? portfolio.id)?.toString(),
       cover: portfolio.cover,
-      images: portfolio.images,
+      images: portfolio.images ?? [],
       title: portfolio.title,
-      content: portfolio.content,
-      excerpt: portfolio.content.substring(0, 80),
-      skills: portfolio.skills,
+      content,
+      excerpt: content.substring(0, 120),
+      skills: portfolio.skills ?? [],
       publishedAt: portfolio.publishedAt,
     };
   }
@@ -29,7 +30,11 @@ export default (connection) => {
   async function getPortfolios(offset, limit) {
     try {
       const [portfolios, total] = await Promise.all([
-        PortfolioModel.where({}).skip(offset).limit(limit).find(),
+        PortfolioModel.find({})
+          .sort({ publishedAt: -1, _id: -1 })
+          .skip(offset)
+          .limit(limit)
+          .lean(),
         PortfolioModel.countDocuments(),
       ]);
 
@@ -46,7 +51,7 @@ export default (connection) => {
     let portfolio;
 
     try {
-      portfolio = await PortfolioModel.where({ _id: id }).findOne();
+      portfolio = await PortfolioModel.findOne({ _id: id }).lean();
     } catch (error) {
       throw new Error(error);
     }

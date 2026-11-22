@@ -4,7 +4,6 @@ import { usePortfolioStore } from "@/stores/portfolio";
 
 const authStore = useAuthStore();
 const store = usePortfolioStore();
-const route = useRoute();
 
 if (!authStore.canEdit) {
   navigateTo("/login");
@@ -16,13 +15,10 @@ useHead({
 </script>
 
 <template>
-  <!-- หน้านี้คือ new portfolio -->
-
   <PortfolioForm
     :portfolio="store.newPortfolio()"
-    :can-delete="authStore.canEdit"
+    :can-delete="false"
     @submit="store.createPortfolio"
     @cancel="navigateTo('/')"
-    @delete="store.deletePortfolio(route.param.id)"
   />
 </template>

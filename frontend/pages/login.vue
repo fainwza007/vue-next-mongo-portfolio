@@ -6,13 +6,13 @@ definePageMeta({
 });
 
 useHead({
-  title: "Login",
+  title: "Sign In | Akarin Sangyor Portfolio",
 });
 
 const store = useAuthStore();
 
-// ถ้า login อยู่แล้วให้ redirect ไปหน้าหลัก
 onMounted(() => {
+  store.userError = "";
   if (store.user.loggedIn === true) {
     navigateTo("/");
   }
@@ -27,16 +27,9 @@ const onSubmit = async (values) => {
 </script>
 
 <template>
-  <!-- <form @submit.prevent="onSubmit">
-    <input class="border" name="username" placeholder="Username">
-    <input type="password" class="border" name="password" placeholder="Password">
-    <BaseButton type="submit">Login</BaseButton>
-  </form> -->
-
-  <main class="flex items-center justify-center min-h-screen">
-    <div class="w-full max-w-sm">
-      <LoginForm @submit="onSubmit" :error="store.userError" />
-      <!-- <BaseErrorMessage>{{ store.userError }}</BaseErrorMessage> -->
-    </div>
-  </main>
+  <LoginForm
+    :error="store.userError"
+    :loading="store.isLoggedIn"
+    @submit="onSubmit"
+  />
 </template>

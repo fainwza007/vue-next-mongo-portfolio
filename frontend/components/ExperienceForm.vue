@@ -1,77 +1,72 @@
 <script setup>
-
 const props = defineProps({
-    experiences: Array
-})
+  experiences: Array,
+});
 
-const emits = defineEmits(['submit', 'cancel'])
-
+const emits = defineEmits(["submit", "cancel"]);
 
 const { handleSubmit, isSubmitting } = useForm({
-    validationSchema: useExperiencesValidationSchema(),
-    validateOnInput: true,
-    keepValuesOnUnmount: true,
-    initialValues: {
-      experiences: props.experiences,
-    }
-})
+  validationSchema: useExperiencesValidationSchema(),
+  validateOnInput: true,
+  keepValuesOnUnmount: true,
+  initialValues: {
+    experiences: props.experiences,
+  },
+});
 
+const { remove, prepend, fields } = useFieldArray("experiences");
 
-const { remove, prepend, fields } = useFieldArray('experiences');
-
-const onAdd = () => prepend({
-    logo: '',
-    title: '',
-    company: '',
-    type: '',
-    start: '',
-    end: '',
+const onAdd = () =>
+  prepend({
+    logo: "",
+    title: "",
+    company: "",
+    type: "",
+    start: "",
+    end: "",
     skills: [],
-    detail: '',
-})
+    detail: "",
+  });
 
 const onRemove = (idx) => {
-    remove(idx)
-}
+  remove(idx);
+};
 
-const onSubmit = handleSubmit(values => {
-    emits('submit', values);
-})
-
+const onSubmit = handleSubmit((values) => {
+  emits("submit", values);
+});
 </script>
 
-
 <template>
-    <form @submit="onSubmit">
-        <h2 class="text-xl font-bold mb-3 flex justify-between">
-            <span class="space-x-2">
-                <span>Experiences</span>
-                <BaseButton
-                    type="button"
-                    size="small"
-                    variant="secondary"
-                    @click="onAdd"
-                >
-                    Add
-                </BaseButton>
-            </span>
-            <BaseFormPanel
-                :is-saving="isSubmitting"
-                @cancel="$emit('cancel')"
-            />
+  <form
+    @submit="onSubmit"
+    class="bg-white rounded-2xl border border-primary/30 p-6 md:p-8 shadow-sm"
+  >
+    <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+      <div class="flex items-center gap-3">
+        <h2 class="text-lg md:text-xl font-bold text-slate-900">
+          Edit Work Experiences
         </h2>
-        <ol class="space-y-4">
-            <li
-                v-for="(field, idx) in fields"
-                :key="field.key"
-            >
-                <ExperienceFormField
-                    :key="idx"
-                    :field="field"
-                    :idx="idx"
-                    @remove="onRemove"
-                />
-            </li>
-        </ol>
-    </form>
+        <BaseButton
+          type="button"
+          size="small"
+          variant="secondary"
+          @click="onAdd"
+        >
+          + Add Role
+        </BaseButton>
+      </div>
+      <BaseFormPanel :is-saving="isSubmitting" @cancel="$emit('cancel')" />
+    </div>
+
+    <ol class="space-y-5">
+      <li v-for="(field, idx) in fields" :key="field.key">
+        <ExperienceFormField
+          :field="field"
+          :idx="idx"
+          @remove="onRemove"
+        />
+      </li>
+    </ol>
+  </form>
 </template>

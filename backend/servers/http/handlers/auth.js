@@ -1,12 +1,13 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
+import { useJwt } from "#app/servers/http/middlewares/jwt";
 
 export default ({ authService }, config) => {
   function router() {
     const router = express.Router();
 
     router.post("/login", asyncHandler(login));
-    router.post("/register", asyncHandler(register));
+    router.post("/register", useJwt(config.jwt), asyncHandler(register));
 
     return router;
   }

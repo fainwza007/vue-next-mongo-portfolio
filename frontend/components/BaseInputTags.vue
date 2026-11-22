@@ -1,64 +1,75 @@
 <script setup>
-import TagsInput from 'vue3-tags-input'
+import TagsInput from "vue3-tags-input";
 
 defineOptions({
-    inheritAttrs: false
-})
+  inheritAttrs: false,
+});
 
 const props = defineProps({
-    name: String,
-    modelValue: Array
-})
+  name: String,
+  modelValue: Array,
+});
 
 const { value, errorMessage } = useField(() => props.name, undefined, {
-    syncVModel: true
-})
+  syncVModel: true,
+});
 
 const style = computed(() => {
-    if (errorMessage.value) {
-        return 'error'
-    }
+  if (errorMessage.value) {
+    return "error";
+  }
 
-    return ''
-})
+  return "";
+});
 
 const onTagsChanged = (tags) => {
-    value.value = tags
-}
+  value.value = tags;
+};
 </script>
 
 <template>
-    <div :class="style">
-        <TagsInput @on-tags-changed="onTagsChanged" :add-tag-on-keys="[13, 188]" :tags="value" v-bind="$attrs" />
-        <BaseErrorMessage v-if="errorMessage">{{ errorMessage }}</BaseErrorMessage>
-    </div>
+  <div :class="style">
+    <TagsInput
+      @on-tags-changed="onTagsChanged"
+      :add-tag-on-keys="[13, 188]"
+      :tags="value"
+      v-bind="$attrs"
+    />
+    <BaseErrorMessage v-if="errorMessage">{{ errorMessage }}</BaseErrorMessage>
+  </div>
 </template>
 
 <style lang="css">
 .error .v3ti {
-    border-color: #E0115F
+  border-color: #f43f5e;
 }
 
 .error .v3ti--focus {
-    border-color: #E0115F
+  border-color: #e11d48;
+  box-shadow: 0 0 0 4px rgba(244, 63, 94, 0.15);
 }
 
 .v3ti {
-    border-width: 2px;
-    border-color: #A1C2F1;
-    border-radius: 0.375rem;
-    padding: 0.2rem;
+  border-width: 1px;
+  border-color: #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 0.35rem 0.5rem;
+  background-color: #ffffff;
+  transition: all 0.2s ease;
 }
 
 .v3ti--focus {
-    outline-width: 0px;
-    border-color: #5a96e3;
-    box-shadow: none;
+  outline-width: 0px;
+  border-color: #0a6ebd;
+  box-shadow: 0 0 0 4px rgba(10, 110, 189, 0.15);
 }
 
 .v3ti .v3ti-tag {
-    background: #0A6EBD;
-    font-size: .875rem;
-    padding: 0.25rem 0.75rem;
+  background: linear-gradient(135deg, #0a6ebd, #3b82f6);
+  border-radius: 9999px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  padding: 0.25rem 0.75rem;
+  margin: 0.2rem;
 }
 </style>

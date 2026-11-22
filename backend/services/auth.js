@@ -26,7 +26,10 @@ export default ({ userRepo }, config) => {
         },
       },
       config.secret,
-      { algorithm: config.algorithms[0] }
+      {
+        algorithm: config.algorithms[0],
+        expiresIn: "7d",
+      }
     );
 
     // const token = jwt.sign(

@@ -28,6 +28,21 @@ useHead({
     meta: [
         {
             name: 'description', content: store.portfolio.excerpt
+        },
+        {
+            property: 'og:title', content: `${store.portfolio.title} | Akarin Sangyor`
+        },
+        {
+            property: 'og:description', content: store.portfolio.excerpt
+        },
+        {
+            property: 'og:image', content: store.portfolio.cover
+        },
+        {
+            property: 'og:type', content: 'article'
+        },
+        {
+            name: 'twitter:card', content: 'summary_large_image'
         }
     ]
 })
@@ -42,7 +57,7 @@ useHead({
             <Portfolio :portfolio="store.portfolio" :can-edit="authStore.canEdit" @edit="store.enterEditMode" />
         </template>
         <template #edit>
-            <PortfolioForm :portfolio="store.portfolio" :can-delete="authStore.canEdit" @submit="store.savePortfolio"
+            <LazyPortfolioForm :portfolio="store.portfolio" :can-delete="authStore.canEdit" @submit="store.savePortfolio"
                 @cancel="store.enterViewMode" @delete="store.deletePortfolio(route.params.id)" />
         </template>
     </BaseEditable>

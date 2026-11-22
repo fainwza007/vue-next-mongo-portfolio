@@ -13,22 +13,28 @@ export const useProfileStore = defineStore("profile", () => {
   const hasMorePortfolios = ref(true);
   const skillsEditMode = ref(false);
   const experiencesEditMode = ref(false);
-  const visibleExperiencesNumber = ref(2);
+  const visibleExperiencesNumber = ref(3);
 
   const hasMoreExperiences = computed(() => {
-    return visibleExperiencesNumber.value < profile.value.experiences.length;
+    const list = profile.value?.experiences ?? [];
+    return visibleExperiencesNumber.value < list.length;
   });
 
   async function getProfile() {
     try {
       const { data: response, error, status } = await getProfileAPI();
-      if (status == "error") {
-        throw new Error(error);
+      if (status.value === "error" || error.value) {
+        throw error.value || new Error("Failed to fetch profile");
       }
 
-      profile.value = response.value;
+      if (response.value) {
+        profile.value = {
+          overallSkills: response.value.overallSkills ?? [],
+          experiences: response.value.experiences ?? [],
+        };
+      }
     } catch (error) {
-      throw new Error(error);
+      console.error("Failed to load profile:", error);
     }
   }
 
@@ -42,22 +48,23 @@ export const useProfileStore = defineStore("profile", () => {
         status,
       } = await getPortfoliosAPI(page, limit);
 
-      // console.log(response);
-      if (status == "error") {
-        throw new Error(error);
+      if (status.value === "error" || error.value) {
+        throw error.value || new Error("Failed to fetch portfolios");
       }
 
-      // hasMorePortfolios.value = response.value.length >= limit;
+      const items = response.value?.data ?? [];
+      const total = response.value?.total ?? 0;
 
       if (page == 1) {
-        portfolios.value = response.value.data;
+        portfolios.value = items;
       } else {
-        portfolios.value = [...portfolios.value, ...response.value.data];
+        portfolios.value = [...portfolios.value, ...items];
       }
 
-      hasMorePortfolios.value = portfolios.value.length < response.value.total;
+      hasMorePortfolios.value = portfolios.value.length < total;
     } catch (error) {
-      throw new Error(error);
+      console.error("Failed to load portfolios:", error);
+      hasMorePortfolios.value = false;
     } finally {
       isGettingPortfolios.value = false;
     }
@@ -65,6 +72,7 @@ export const useProfileStore = defineStore("profile", () => {
 
   async function saveSkills(draftedSkills) {
     const authStore = useAuthStore();
+    const toast = useToast();
 
     try {
       const {
@@ -75,14 +83,15 @@ export const useProfileStore = defineStore("profile", () => {
         { overallSkills: draftedSkills.skills },
         authStore.token
       );
-      if (status == "error") {
-        throw new Error(error);
+      if (status.value === "error" || error.value) {
+        toast.error("Failed to update skills. Please try again.");
+        throw error.value || new Error("Failed to save skills");
       }
 
-      if (response.value.status) {
+      if (response.value?.status) {
         skillsEditMode.value = false;
-
         profile.value.overallSkills = draftedSkills.skills;
+        toast.success("Technical skills updated successfully!");
       }
     } catch (error) {
       throw new Error(error);
@@ -91,6 +100,7 @@ export const useProfileStore = defineStore("profile", () => {
 
   async function saveExperiences(draftedExperiences) {
     const authStore = useAuthStore();
+    const toast = useToast();
 
     try {
       const {
@@ -98,14 +108,15 @@ export const useProfileStore = defineStore("profile", () => {
         error,
         status,
       } = await saveProfileAPI(draftedExperiences, authStore.token);
-      if (status == "error") {
-        throw new Error(error);
+      if (status.value === "error" || error.value) {
+        toast.error("Failed to update experiences. Please try again.");
+        throw error.value || new Error("Failed to save experiences");
       }
 
-      if (response.value.status) {
+      if (response.value?.status) {
         profile.value.experiences = draftedExperiences.experiences;
-
         experiencesEditMode.value = false;
+        toast.success("Work experiences updated successfully!");
       }
     } catch (error) {
       throw new Error(error);
@@ -140,6 +151,7 @@ export const useProfileStore = defineStore("profile", () => {
     profile,
     skillsEditMode,
     experiencesEditMode,
+    visibleExperiencesNumber,
     hasMoreExperiences,
     portfolios,
     isGettingPortfolios,

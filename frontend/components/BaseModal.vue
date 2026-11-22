@@ -1,26 +1,26 @@
 <script setup>
-
-import { VueFinalModal } from 'vue-final-modal'
+import { VueFinalModal } from "vue-final-modal";
 
 defineProps({
-    title: String
-})
+  title: String,
+});
 
-defineEmits(['confirm'])
-
+defineEmits(["confirm"]);
 </script>
 
 <template>
-
-    <VueFinalModal class="flex justify-center items-center"
-        content-class="flex flex-col max-w-xl mx-4 p-4 bg-white rounded-lg space-y-2">
-        <h1 class="text-xl">
-            {{ title }}
-        </h1>
-        <slot />
-        <BaseButton @click="$emit('confirm')" size="small">
-            Confirm
-        </BaseButton>
-    </VueFinalModal>
-
+  <VueFinalModal
+    class="flex justify-center items-center backdrop-blur-xs"
+    content-class="flex flex-col w-full max-w-md mx-4 p-6 bg-white rounded-2xl border border-slate-200/80 shadow-2xl space-y-4"
+  >
+    <h2 class="text-lg font-bold text-slate-900">
+      {{ title }}
+    </h2>
+    <slot />
+    <div class="flex justify-end pt-2">
+      <BaseButton @click="$emit('confirm')" size="small">
+        Confirm
+      </BaseButton>
+    </div>
+  </VueFinalModal>
 </template>

@@ -1,7 +1,7 @@
 <template>
-
-<span class="bg-quaternary text-primary text-xs px-2 py-1 rounded-md font-bold inline-block md:text-sm md:px-3 md:py-2 mr-1.25">
-        <slot />
-    </span>
-
+  <span
+    class="inline-flex items-center px-3 py-1 rounded-full text-xs md:text-sm font-medium bg-sky-50/90 text-primary border border-sky-200/80 shadow-2xs transition-all duration-200 hover:bg-sky-100 hover:border-sky-300 hover:-translate-y-0.5 hover:shadow-xs"
+  >
+    <slot />
+  </span>
 </template>

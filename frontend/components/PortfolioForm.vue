@@ -20,6 +20,7 @@ const { handleSubmit, isSubmitting, submitCount } = useForm({
 
 const { remove, push, fields } = useFieldArray("images");
 const imageError = useFieldError("images");
+const showDeleteConfirmModal = ref(false);
 
 const onSubmit = handleSubmit((values) => {
   emits("submit", values);
@@ -27,86 +28,138 @@ const onSubmit = handleSubmit((values) => {
 </script>
 
 <template>
-  <form @submit="onSubmit">
-    <div class="flex justify-between">
-      <span></span>
+  <form
+    @submit="onSubmit"
+    class="bg-white rounded-3xl border border-slate-200/80 p-6 md:p-8 shadow-xs space-y-6"
+  >
+    <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-100">
+      <div>
+        <h2 class="text-lg md:text-xl font-bold text-slate-900">
+          Portfolio Project Details
+        </h2>
+        <p class="text-xs md:text-sm text-slate-500">
+          Configure cover image, screenshots, tech stack, and case study content
+        </p>
+      </div>
       <BaseFormPanel :is-saving="isSubmitting" @cancel="$emit('cancel')" />
     </div>
-    <div class="mt-2">
-      <BaseInput name="cover" placeholder="Input the cover image url" />
-    </div>
-    <div
-      :class="[
-        'w-full border-2 rounded-md p-5 my-2 space-y-2 bg-white focus:outline-0',
-        submitCount > 0 && imageError
-          ? 'border-red-500'
-          : 'border-tertiary focus:border-secondary',
-      ]"
-    >
-      <ul>
-        <li
-          v-for="(field, idx) in fields"
-          :key="field.key"
-          class="flex space-x-2"
+
+    <div class="space-y-4">
+      <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">
+          Cover Image URL
+        </label>
+        <BaseInput name="cover" placeholder="https://example.com/cover.jpg" />
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">
+          Gallery Images
+        </label>
+        <div
+          :class="[
+            'w-full border rounded-2xl p-4 space-y-3 bg-slate-50/60',
+            submitCount > 0 && imageError
+              ? 'border-rose-400'
+              : 'border-slate-200/90',
+          ]"
         >
-          <div class="flex-1">
-            <BaseInput
-              :name="`images[${idx}]`"
-              :key="idx"
-              :value="field.value"
-              v-model="field.value"
-              placeholder="Input the image url"
-            />
-          </div>
+          <ul v-if="fields.length > 0" class="space-y-2.5">
+            <li
+              v-for="(field, idx) in fields"
+              :key="field.key"
+              class="flex items-start gap-2"
+            >
+              <div class="flex-1">
+                <BaseInput
+                  :name="`images[${idx}]`"
+                  :value="field.value"
+                  v-model="field.value"
+                  placeholder="https://example.com/screenshot.jpg"
+                />
+              </div>
+              <BaseButton
+                variant="danger"
+                size="small"
+                class="mt-0.5"
+                type="button"
+                @click="remove(idx)"
+              >
+                Delete
+              </BaseButton>
+            </li>
+          </ul>
+
           <BaseButton
-            variant="danger"
-            size="small"
-            class="mb-1"
             type="button"
-            @click="remove(idx)"
+            size="small"
+            variant="secondary"
+            class="w-full"
+            @click="push('')"
           >
-            Delete
+            + Add Gallery Image
           </BaseButton>
-        </li>
-      </ul>
 
-      <BaseButton
-        type="button"
-        size="small"
-        variant="secondary"
-        class="w-full"
-        @click="push('')"
-      >
-        Add a new image
-      </BaseButton>
-
-      <ErrorMessage v-if="submitCount > 0" name="images" v-slot="{ message }">
-        <div class="text-red-500 text-sm">{{ message }}</div>
-      </ErrorMessage>
-    </div>
-
-    <div class="space-y-2">
-      <BaseInput name="title" placeholder="Title" />
-      <div class="flex space-x-2">
-        <div class="flex-1">
-          <BaseInputTags name="skills" placeholder="Input related skills" />
+          <ErrorMessage v-if="submitCount > 0" name="images" v-slot="{ message }">
+            <div class="text-rose-600 text-xs font-medium">{{ message }}</div>
+          </ErrorMessage>
         </div>
-        <div class="flex-1">
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">
+          Project Title
+        </label>
+        <BaseInput name="title" placeholder="Project Title" />
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">
+            Skills &amp; Technologies
+          </label>
+          <BaseInputTags name="skills" placeholder="Input related skills..." />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">
+            Published Date
+          </label>
           <BaseInputDate name="publishedAt" placeholder="Published Date" />
         </div>
       </div>
-      <BaseTextArea name="content" rows="30" />
+
+      <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">
+          Project Content &amp; Description
+        </label>
+        <BaseTextArea
+          name="content"
+          rows="16"
+          placeholder="Write about the project architecture, challenges, and results..."
+        />
+      </div>
     </div>
-    <div class="mt-10 flex justify-end">
+
+    <div v-if="canDelete" class="pt-4 border-t border-slate-100 flex justify-end">
       <BaseButton
-        v-if="canDelete"
         type="button"
         size="small"
         variant="danger"
-        @click="$emit('delete')"
+        @click="showDeleteConfirmModal = true"
       >
         Delete this portfolio
       </BaseButton>
+      <BaseConfirmModal
+        v-model="showDeleteConfirmModal"
+        title="Delete Portfolio Project?"
+        :message="`Are you sure you want to permanently delete '${portfolio?.title || 'this project'}'? This action cannot be undone.`"
+        confirm-text="Yes, Delete Project"
+        @cancel="showDeleteConfirmModal = false"
+        @confirm="
+          showDeleteConfirmModal = false;
+          $emit('delete');
+        "
+      />
     </div>
   </form>
 </template>

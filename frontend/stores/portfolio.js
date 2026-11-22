@@ -6,7 +6,6 @@ import {
   createPortfolioAPI,
   deletePortfolioAPI,
 } from "@/repositories/portfolio";
-import moment from "moment";
 
 export const usePortfolioStore = defineStore("portfolio", () => {
   const portfolio = ref(newPortfolio());
@@ -20,15 +19,15 @@ export const usePortfolioStore = defineStore("portfolio", () => {
       content: "",
       excerpt: "",
       skills: [],
-      publishedAt: moment().toISOString(),
+      publishedAt: new Date().toISOString(),
     };
   }
 
   async function getPortfolio(id) {
     try {
       const { data: response, error, status } = await getPortfolioAPI(id);
-      if (status == "error") {
-        throw new Error(error);
+      if (status.value === "error" || error.value) {
+        throw error.value || new Error("Failed to fetch portfolio");
       }
 
       portfolio.value = response.value;
@@ -39,6 +38,7 @@ export const usePortfolioStore = defineStore("portfolio", () => {
 
   async function createPortfolio(draftedPortfolio) {
     const authStore = useAuthStore();
+    const toast = useToast();
 
     try {
       const {
@@ -46,15 +46,15 @@ export const usePortfolioStore = defineStore("portfolio", () => {
         error,
         status,
       } = await createPortfolioAPI(draftedPortfolio, authStore.token);
-      if (status == "error") {
-        throw new Error(error);
+      if (status.value === "error" || error.value) {
+        toast.error("Failed to create portfolio project.");
+        throw error.value || new Error("Failed to create portfolio");
       }
 
-      if (response.value.status) {
+      if (response.value?.status) {
         portfolio.value = draftedPortfolio;
-
         editMode.value = false;
-
+        toast.success("New portfolio project published!");
         navigateTo("/");
       }
     } catch (error) {
@@ -64,6 +64,7 @@ export const usePortfolioStore = defineStore("portfolio", () => {
 
   async function savePortfolio(draftedPortfolio) {
     const authStore = useAuthStore();
+    const toast = useToast();
 
     try {
       const {
@@ -75,14 +76,15 @@ export const usePortfolioStore = defineStore("portfolio", () => {
         draftedPortfolio,
         authStore.token
       );
-      if (status == "error") {
-        throw new Error(error);
+      if (status.value === "error" || error.value) {
+        toast.error("Failed to save portfolio changes.");
+        throw error.value || new Error("Failed to save portfolio");
       }
 
-      if (response.value.status) {
+      if (response.value?.status) {
         portfolio.value = draftedPortfolio;
-
         editMode.value = false;
+        toast.success("Portfolio project saved successfully!");
       }
     } catch (error) {
       throw new Error(error);
@@ -91,6 +93,7 @@ export const usePortfolioStore = defineStore("portfolio", () => {
 
   async function deletePortfolio(id) {
     const authStore = useAuthStore();
+    const toast = useToast();
 
     try {
       const {
@@ -98,13 +101,14 @@ export const usePortfolioStore = defineStore("portfolio", () => {
         error,
         status,
       } = await deletePortfolioAPI(id, authStore.token);
-      if (status == "error") {
-        throw new Error(error);
+      if (status.value === "error" || error.value) {
+        toast.error("Failed to delete portfolio project.");
+        throw error.value || new Error("Failed to delete portfolio");
       }
 
-      if (response.value.status) {
+      if (response.value?.status) {
         editMode.value = false;
-
+        toast.info("Portfolio project deleted.");
         navigateTo("/");
       }
     } catch (error) {
